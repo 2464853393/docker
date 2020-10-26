@@ -1,0 +1,22 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: spark-configmap
+data:
+  config.sh: |
+    #!/bin/bash
+
+    # Spark master hostname
+    SPARK_MASTER_HOSTNAME=spark-master-0
+    # Spark master hostname can be accessed from other pods
+    SPARK_MASTER_HOST=$SPARK_MASTER_HOSTNAME.spark-master-headless.$MY_NAMESPACE.svc.cluster.local
+    # Spark master port
+    SPARK_MASTER_PORT=7077
+    # Spark slave hostname
+    SPARK_SLAVE_HOSTNAME=spark-slave
+  slaves: |
+    spark-slave-0.spark-slave-headless.$MY_NAMESPACE.svc.cluster.local
+    spark-slave-1.spark-slave-headless.$MY_NAMESPACE.svc.cluster.local
+    spark-slave-2.spark-slave-headless.$MY_NAMESPACE.svc.cluster.local
+

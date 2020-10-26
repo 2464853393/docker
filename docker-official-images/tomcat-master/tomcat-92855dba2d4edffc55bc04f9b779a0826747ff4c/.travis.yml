@@ -1,0 +1,49 @@
+language: bash
+services: docker
+
+env:
+  - VERSION=9.0 VARIANT=jre8-slim
+  - VERSION=9.0 VARIANT=jre8-alpine
+  - VERSION=9.0 VARIANT=jre8
+  - VERSION=9.0 VARIANT=jre10-slim
+  - VERSION=9.0 VARIANT=jre10
+  - VERSION=8.5 VARIANT=jre8-slim
+  - VERSION=8.5 VARIANT=jre8-alpine
+  - VERSION=8.5 VARIANT=jre8
+  - VERSION=8.5 VARIANT=jre10-slim
+  - VERSION=8.5 VARIANT=jre10
+  - VERSION=8.0 VARIANT=jre8-slim
+  - VERSION=8.0 VARIANT=jre8-alpine
+  - VERSION=8.0 VARIANT=jre8
+  - VERSION=8.0 VARIANT=jre7-slim
+  - VERSION=8.0 VARIANT=jre7-alpine
+  - VERSION=8.0 VARIANT=jre7
+  - VERSION=7 VARIANT=jre8-slim
+  - VERSION=7 VARIANT=jre8-alpine
+  - VERSION=7 VARIANT=jre8
+  - VERSION=7 VARIANT=jre7-slim
+  - VERSION=7 VARIANT=jre7-alpine
+  - VERSION=7 VARIANT=jre7
+
+install:
+  - git clone https://github.com/docker-library/official-images.git ~/official-images
+
+before_script:
+  - env | sort
+  - wget -qO- 'https://github.com/tianon/pgp-happy-eyeballs/raw/master/hack-my-builds.sh' | bash
+  - cd "$VERSION/$VARIANT"
+  - image="tomcat:$VERSION-$VARIANT"
+
+script:
+  - |
+    (
+      set -Eeuo pipefail
+      set -x
+      docker build -t "$image" .
+      ~/official-images/test/run.sh "$image"
+    )
+
+after_script:
+  - docker images
+
+# vim:set et ts=2 sw=2:

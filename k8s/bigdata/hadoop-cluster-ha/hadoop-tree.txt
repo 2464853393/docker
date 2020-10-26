@@ -1,0 +1,108 @@
+C:.		
+├─clusterHA
+│  ├─configmap
+│  │      cluster2-hdfs-configmap.yaml====cluster2-hdfs-configmap		
+│  │      cluster2-rm-configmap.yaml====cluster2-rm-configmap
+│  │			
+│  ├─datanode
+│  │      cluster2-datanode-headless.yaml====cluster2-datanode-headless
+│  │      cluster2-datanode-statefulSet.yaml====cluster2-hdfs-datanode
+│  │
+│  ├─journalnode
+│  │      cluster2-journalnode-headless.yaml====cluster2-journalnode-headless
+│  │      cluster2-journalnode-statefulSet.yaml====cluster2-hdfs-journalnode
+│  │
+│  ├─namenode
+│  │      cluster2-namenode-headless.yaml====cluster2-namenode-headless
+│  │      cluster2-namenode-master-service.yaml====cluster2-namenode-master-service==>cluster2-hdfs-namenode-0
+│  │      cluster2-namenode-standby-service.yaml====cluster2-namenode-standby-service==>cluster2-hdfs-namenode-1
+│  │      cluster2-namenode-statefulSet.yaml====cluster2-hdfs-namenode=>"运行hadoop-config/bootstrap.sh"
+│  │	                                                                
+│  │    
+        
+        
+│  ├─nfs-pv-pvc/hadoop/
+│  │  └─hadoop
+│  │          datanode-pv-pvc-0.yaml==== cluster2-datanode-pv-0==>datadir-cluster2-hdfs-datanode-0==>"挂载目录"/opt/hadoopdata-cluster2/datanodedata-0
+│  │          datanode-pv-pvc-1.yaml==== cluster2-datanode-pv-1==>datadir-cluster2-hdfs-datanode-1
+│  │          datanode-pv-pvc-2.yaml==== cluster2-datanode-pv-2==>datadir-cluster2-hdfs-datanode-2
+│  │          journalnode-pv-pvc-0.yaml==== cluster2-journalnode-pv-0==>datadir-cluster2-hdfs-journalnode-0==>/opt/hadoopdata-cluster2/journalnodedata-0
+│  │          journalnode-pv-pvc-1.yaml==== cluster2-journalnode-pv-1==>datadir-cluster2-hdfs-journalnode-1
+│  │          journalnode-pv-pvc-2.yaml==== cluster2-journalnode-pv-2==>datadir-cluster2-hdfs-journalnode-2
+│  │          namenode-master-pv-pvc.yaml==== cluster2-namenode-pv-master==>datadir-cluster2-hdfs-namenode-0==>/opt/hadoopdata-cluster2/namenodedata-master
+│  │          namenode-standby-pv-pvc.yaml==== cluster2-namenode-pv-standby==>datadir-cluster2-hdfs-namenode-1==>/opt/hadoopdata-cluster2/namenodedata-standby
+│  │
+│  └─resourcemanager
+│          cluster2-resourcemanager-headless.yaml==== cluster2-resourcemanager-headless
+│          cluster2-resourcemanager-master-service.yaml==== cluster2-resourcemanager-master-service==> set-hostname:cluster2-hdfs-resourcemanager-0
+│          cluster2-resourcemanager-standby-service.yaml==== cluster2-resourcemanager-standby-service==> set-hostname: cluster2-hdfs-resourcemanager-1
+│          cluster2-resourcemanager-statefulSet.yaml==== cluster2-hdfs-resourcemanager
+│
+├─configmap
+│      hdfs-configmap.yaml====hdfs-configmap
+│      resourcemanager-configmap.yaml====resourcemanager-configmap
+│
+├─datanode
+│      hadoop-datanode-headless.yaml====hadoop-datanode-headless
+│      hadoop-datanode-statefulSet.yaml====hadoop-hdfs-datanode
+│
+├─dockerfile
+│  │-hadoop.dockerfile====
+│  │
+│  └─hadoop-config
+│          bootstrap.sh====
+│          core-site.xml====
+│          hdfs-site.xml====
+│          healthcheck-datanode.sh====
+│          healthcheck-journalnode.sh====
+│          healthcheck-resourcemanager.sh====
+│          mapred-site.xml====
+│          slaves-change.sh====
+│          yarn-site.xml====
+│
+├─journalnode
+│      hadoop-journalnode-headless.yaml==== hadoop-journalnode-headless
+│      hadoop-journalnode-statefulSet.yaml==== hadoop-hdfs-journalnode==>"/etc/hadoop-config/bootstrap.sh" 
+│
+├─namenode
+│      hadoop-namenode-headless.yaml====hadoop-namenode-headless
+│      hadoop-namenode-master-service.yaml====hadoop-namenode-master-service==>set-hostname: hadoop-hdfs-namenode-0
+│      hadoop-namenode-standby-service.yaml====hadoop-namenode-standby-service==>set-hostname: hadoop-hdfs-namenode-1
+│      hadoop-namenode-statefulSet.yaml====hadoop-hdfs-namenode==>hadoop-hdfs-namenode
+│
+├─nfs-pv-pvc-changed
+│      datanode-pv-pvc-0.yaml====datanode-pv-0==>datadir-hadoop-hdfs-datanode-0==>>/opt/hadoopdata/datanodedata-0
+│      datanode-pv-pvc-1.yaml====
+│      datanode-pv-pvc-2.yaml====
+│      journalnode-pv-pvc-0.yaml====journalnode-pv-0==>datadir-hadoop-hdfs-journalnode-0
+│      journalnode-pv-pvc-1.yaml====
+│      journalnode-pv-pvc-2.yaml====
+│      namenode-master-pv-pvc.yaml====namenode-pv-master==>datadir-hadoop-hdfs-namenode-0
+│      namenode-standby-pv-pvc.yaml====namenode-pv-standby==>datadir-hadoop-hdfs-namenode-1
+│
+├─resourcemanager
+│      hadoop-resourcemanager-headless.yaml====hadoop-resourcemanager-headless
+│      hadoop-resourcemanager-master-service.yaml====hadoop-resourcemanager-master-service==>hadoop-hdfs-resourcemanager-0
+│      hadoop-resourcemanager-standby-service.yaml====hadoop-resourcemanager-standby-service ==>set-hostname: hadoop-hdfs-resourcemanager-1
+│      hadoop-resourcemanager-statefulSet.yaml==== hadoop-hdfs-resourcemanager
+│
+└─resourcemanager-2
+    │  结构.pptx
+    │
+    ├─configmap
+    │      second-rm-configmap.yaml====second-rm-configmap
+    │
+    ├─nfs-pv-pvc
+    │      nodemanager-pv-pvc-0.yaml====nodemanager-pv-0==>datadir-second-hdfs-nodemanager-0==>>/opt/hadoopdata/nodemanagerdata-0
+    │      nodemanager-pv-pvc-1.yaml====
+    │      nodemanager-pv-pvc-2.yaml====
+    │
+    ├─nodemanager
+    │      second-nodemanager-headless.yaml====second-nodemanager-headless==>
+    │      second-nodemanager-statefulSet.yaml====second-hdfs-nodemanager==>containers-name:hadoop-datanode
+    │
+    └─resourcemanager
+            second-resourcemanager-headless.yaml====second-resourcemanager-headless
+            second-resourcemanager-master-service.yaml====second-resourcemanager-master-service==>second-hdfs-resourcemanager-0
+            second-resourcemanager-standby-service.yaml====second-resourcemanager-standby-service==>second-hdfs-resourcemanager-1
+            second-resourcemanager-statefulSet.yaml====second-hdfs-resourcemanager

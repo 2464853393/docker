@@ -1,0 +1,79 @@
+---
+kind: StatefulSet
+apiVersion: apps/v1beta2
+metadata:
+  name: spark-master
+  labels:
+    app: spark
+    component: spark-master
+  annotations:
+    hadoop/version: 2.7.3
+    jdk/version: jdk1.8.0_161
+    spark/version: 2.3.0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spark
+      component: spark-master
+  template:
+    metadata:
+      labels:
+        app: spark
+        component: spark-master
+    spec:
+      volumes:
+      - name: hdfs-config
+        configMap:
+          name: hdfs-configmap
+          defaultMode: 420
+      - name: rm-config
+        configMap:
+          name: resourcemanager-configmap
+          defaultMode: 420 
+      - name: spark-config
+        configMap:
+          name: spark-configmap
+          defaultMode: 420
+      containers:
+      - name: spark-master
+        image: zhhray/hadoop-spark:2.3.0
+        command:
+        - "/bin/bash"
+        - "/etc/spark-config/bootstrap.sh"
+        env:
+        - name: MY_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        ports:
+        - name: server
+          containerPort: 7077
+          protocol: TCP
+        - name: web
+          containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+        - name: hdfs-config
+          mountPath: "/tmp/hadoop/hdfs"
+        - name: rm-config
+          mountPath: "/tmp/hadoop/resourcemanager" 
+        - name: datadir
+          mountPath: "/usr/local/hadoop/tmp"
+        - name: spark-config
+          mountPath: "/tmp/spark"
+        terminationMessagePath: "/dev/termination-log"
+        terminationMessagePolicy: File
+        imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+  volumeClaimTemplates:
+  - metadata:
+      name: datadir
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 2Gi    
+  serviceName: spark-master-headless
+  podManagementPolicy: OrderedReady

@@ -1,0 +1,28 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: cluster2-namenode-master-service
+  labels:
+    app: hadoop
+    component: hadoop-namenode
+    cluster: cluster2
+spec:
+  ports:
+  - name: webhdfs
+    protocol: TCP
+    port: 50070
+    targetPort: 50070
+    nodePort: 30070
+  - name: webhbase
+    protocol: TCP
+    port: 60010
+    targetPort: 60010
+    nodePort: 30011
+  selector:
+    app: hadoop
+    component: hadoop-namenode
+    cluster: cluster2
+    set-hostname: cluster2-hdfs-namenode-0
+  type: NodePort
+  sessionAffinity: None

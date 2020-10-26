@@ -1,0 +1,58 @@
+---
+# helm 安装spark
+helm install stable/spark
+NAME:   idle-garfish
+LAST DEPLOYED: Mon Mar 12 09:55:40 2018
+NAMESPACE: default
+STATUS: DEPLOYED
+
+RESOURCES:
+==> v1/Service
+NAME                   TYPE          CLUSTER-IP     EXTERNAL-IP  PORT(S)         AGE
+idle-garfish-master    ClusterIP     10.97.5.71     <none>       7077/TCP        0s
+idle-garfish-webui     LoadBalancer  10.109.203.17  <pending>    8080:30202/TCP  0s
+idle-garfish-zeppelin  LoadBalancer  10.104.6.124   <pending>    8080:32007/TCP  0s
+
+==> v1beta1/Deployment
+NAME                   DESIRED  CURRENT  UP-TO-DATE  AVAILABLE  AGE
+idle-garfish-master    1        1        1           0          0s
+idle-garfish-worker    3        3        3           0          0s
+idle-garfish-zeppelin  1        1        1           0          0s
+
+==> v1/Pod(related)
+NAME                                    READY  STATUS             RESTARTS  AGE
+idle-garfish-master-6cf86fbcd5-xqzk9    0/1    ContainerCreating  0         0s
+idle-garfish-worker-5574769fd-fmbgw     0/1    ContainerCreating  0         0s
+idle-garfish-worker-5574769fd-hw99q     0/1    ContainerCreating  0         0s
+idle-garfish-worker-5574769fd-mmvb2     0/1    ContainerCreating  0         0s
+idle-garfish-zeppelin-594b949798-xbl9d  0/1    ContainerCreating  0         0s
+
+
+NOTES:
+1. Get the Spark URL to visit by running these commands in the same shell:
+  
+  NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+  You can watch the status of by running 'kubectl get svc --namespace default -w idle-garfish-webui'
+  
+  export SPARK_SERVICE_IP=$(kubectl get svc --namespace default idle-garfish-webui -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+  echo http://$SPARK_SERVICE_IP:8080
+
+2. Get the Zeppelin URL to visit by running these commands in the same shell:
+  
+  NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+  You can watch the status of by running 'kubectl get svc --namespace default -w idle-garfish-zeppelin'
+  
+  export ZEPPELIN_SERVICE_IP=$(kubectl get svc --namespace default idle-garfish-zeppelin -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+  echo http://$ZEPPELIN_SERVICE_IP:8080
+
+  
+参考：  
+http://blog.csdn.net/oopsoom/article/details/24257981  
+https://www.cnblogs.com/kwongtai/p/7229825.html
+
+
+
+
+http://www.codeceo.com/understand-hadoop-hbase-hive-spark-distributed-system-architecture.html
+
+

@@ -1,0 +1,28 @@
+bigdata文件中包括内容有：
+	创建k8s对象的yaml文件
+	运行创建对象的脚本文件,包括create.sh文件和delete.sh文件
+	dockerfile文件（bootstrap脚本、Dockerfile、配置文件）
+	nfs创建文件夹的脚本：mkdir.sh。将k8s中集群信息存储在nfs文件系统上
+	Storm集群安装和storm的Dockerfile
+	
+	
+搭建zookeeper集群：
+	运行zookeeper-cluster文件夹下的create-zk-all.sh
+	
+	
+搭建k8s的HadoopHA集群：
+	运行hadoop-cluster-ha文件：create.sh
+	create.sh会自动	创建Hadoop HA集群，同时包括创建hiveHA集群、Hbase集群、Spark集群
+	
+搭建storm集群：
+	使用storm文件夹得Dockerfile文件创建docker镜像
+	运行create-storm.sh创建storm集群
+	
+	
+安装nfs文件系统：
+	在ks8总结文档中安装nfs系统
+	运行nfs文件夹中的mkdir.sh创建k8s中集群的外部挂载文件系统
+
+	
+	
+	

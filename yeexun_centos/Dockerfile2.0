@@ -1,0 +1,45 @@
+FROM centos:6.8
+
+#COPY . /
+
+#容器添加Java、tomcat、nginx、redis、MySQL服务
+#安装wget，从ftp下载文件
+RUN yum install -y wget \
+ \
+ #下载所有文件到镜像
+ && wget -nH -m  ftp://10.221.121.1/ywz/ --ftp-user=ftpyx --ftp-password=yeexunftp \
+ && mv /ywz/* / \
+ \
+ && chmod 777 -R /bootstrap/* \
+ && /bootstrap/add-dependency.sh \
+ && rm -rf /bootstrap/add-dependency.sh \
+ \
+ && /bootstrap/add_jre7.sh \
+ && rm -rf /bootstrap/add_jre7.sh \
+ \
+ && /bootstrap/add_tomcat7.sh \
+ && rm -rf /bootstrap/add_tomcat7.sh \
+ \
+ && /bootstrap/add_nginx.sh \
+ && rm -rf /bootstrap/add_nginx.sh \
+ \
+ && /bootstrap/add_redis.sh \
+ && rm -rf /bootstrap/add_redis.sh \
+ \
+ && /bootstrap/add_mysql.sh \
+ && rm -rf /bootstrap/add_mysql.sh \
+ #设置容器时区
+ && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+ #删除不需要的的依赖和安装包
+ && /bootstrap/remove_useless.sh \
+ \
+ && rm -rf /bootstrap && rm -rf /config && rm -rf /soft 
+ 
+
+ENV JRE_HOME /usr/local/jre7 
+ENV PATH $PATH:$JRE_HOME/bin:/usr/local/nginx/sbin/nginx
+
+EXPOSE 3306 33060 6379 6380 80 8005 8080 8009
+
+CMD /bootstrap/start.sh
+

@@ -1,0 +1,34 @@
+├── hadoopdata-cluster2
+│   ├── createdir.sh
+│   ├── datanodedata-0
+│   ├── datanodedata-1
+│   ├── datanodedata-2
+│   ├── datanodedata-3
+│   ├── datanodedata-4
+│   ├── datanodedata-5
+│   ├── datanodedata-6
+│   ├── deletedate.sh
+│   ├── journalnodedata-0
+│   ├── journalnodedata-1
+│   ├── journalnodedata-2
+│   ├── namenodedata-master
+│   ├── namenodedata-standby
+│   └── zkdata
+│       ├── zk-0
+│       ├── zk-1
+│       └── zk-2
+ /opt/hadoopdata-cluster2/datanodedata-0       * (rw,no_root_squash,no_all_squash,sync,insecure )
+ /opt/hadoopdata-cluster2/datanodedata-1       * (rw,no_root_squash,no_all_squash,sync,insecure )
+ /opt/hadoopdata-cluster2/datanodedata-2       * (rw,no_root_squash,no_all_squash,sync,insecure )
+ /opt/hadoopdata-cluster2/datanodedata-3       * (rw,no_root_squash,no_all_squash,sync,insecure )
+ /opt/hadoopdata-cluster2/datanodedata-4       * (rw,no_root_squash,no_all_squash,sync,insecure )
+ /opt/hadoopdata-cluster2/datanodedata-5       * (rw,no_root_squash,no_all_squash,sync,insecure )
+ /opt/hadoopdata-cluster2/datanodedata-6       * (rw,no_root_squash,no_all_squash,sync,insecure )
+ /opt/hadoopdata-cluster2/journalnodedata-0    * (rw,no_root_squash,no_all_squash,sync,insecure )
+ /opt/hadoopdata-cluster2/journalnodedata-1    * (rw,no_root_squash,no_all_squash,sync,insecure )
+ /opt/hadoopdata-cluster2/journalnodedata-2    * (rw,no_root_squash,no_all_squash,sync,insecure )
+ /opt/hadoopdata-cluster2/namenodedata-master  * (rw,no_root_squash,no_all_squash,sync,insecure )
+ /opt/hadoopdata-cluster2/namenodedata-standby * (rw,no_root_squash,no_all_squash,sync,insecure )
+ /opt/hadoopdata-cluster2/zkdata/zk-0          * (rw,no_root_squash,no_all_squash,sync,insecure )
+ /opt/hadoopdata-cluster2/zkdata/zk-1          * (rw,no_root_squash,no_all_squash,sync,insecure )
+ /opt/hadoopdata-cluster2/zkdata/zk-2          * (rw,no_root_squash,no_all_squash,sync,insecure )

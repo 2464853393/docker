@@ -1,0 +1,33 @@
+[root@c91a1f9467eb usr]# du -ah --max-depth=1
+91M	./src
+20M	./libexec
+151M	./share
+18M	./include
+4.0K	./games
+437M	./sbin
+	-rwxr-xr-x 1 root root 239M Aug 25  2016 mysqld
+	-rwxr-xr-x 1 root root 195M Aug 25  2016 mysqld-debug
+0	./tmp
+4.0K	./etc
+115M	./lib
+	[root@c91a1f9467eb locale]# pwd
+	/usr/lib/locale
+	[root@c91a1f9467eb locale]# ll
+	total 96852
+	-rw-r--r-- 1 root root 99170352 Feb 19 20:17 locale-archive
+	-rw-r--r-- 1 root root        0 Feb 19 20:17 locale-archive.tmpl
+269M	./lib64
+	centos-lib
+199M	./local
+231M	./bin
+	
+1.5G	.
+
+
+[root@c91a1f9467eb sbin]# ls -lh | grep mysql
+-rwxr-xr-x 1 root root 239M Aug 25  2016 mysqld
+-rwxr-xr-x 1 root root 195M Aug 25  2016 mysqld-debug
+[root@c91a1f9467eb sbin]# pwd
+/usr/sbin
+
+docker run -d -P --name xdata-test0513 -v /opt/gaodengtest-xdata/docker-mysql-data:/var/lib/mysql-data -v /opt/gaodengtest-xdata/docker-tomcat-log:/usr/local/tomcat7/logs test:v1

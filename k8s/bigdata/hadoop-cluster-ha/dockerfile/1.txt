@@ -1,0 +1,5 @@
+#!/bin/bash
+set -m && \
+    sh /opt/onStart.sh && \
+    touch /var/log/1.txt && \
+    tail -f /var/log/1.txt

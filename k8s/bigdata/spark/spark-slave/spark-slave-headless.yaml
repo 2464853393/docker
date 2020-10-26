@@ -1,0 +1,20 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: spark-slave-headless
+  labels:
+    app: spark
+    component: spark-slave
+spec:
+  ports:
+  - name: web
+    protocol: TCP
+    port: 8081
+    targetPort: 8081
+  selector:
+    app: spark
+    component: spark-slave
+  clusterIP: None  
+  type: ClusterIP
+  sessionAffinity: None

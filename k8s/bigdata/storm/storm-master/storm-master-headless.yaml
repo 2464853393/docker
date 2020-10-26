@@ -1,0 +1,36 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: storm-master-headless
+  labels:
+    app: storm
+    component: storm-master
+spec:
+  ports:
+  - name: server1
+    protocol: TCP
+    port: 6700
+    targetPort: 6700
+  - name: server2
+    protocol: TCP
+    port: 6701
+    targetPort: 6701
+  - name: server3
+    protocol: TCP
+    port: 6702
+    targetPort: 6702
+  - name: server4
+    protocol: TCP
+    port: 6703
+    targetPort: 6703
+  - name: server5
+    protocol: TCP
+    port: 6704
+    targetPort: 6704
+  selector:
+    app: storm
+    component: storm-master
+  clusterIP: None
+  type: ClusterIP
+  sessionAffinity: None

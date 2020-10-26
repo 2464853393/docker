@@ -1,0 +1,13 @@
+storm.zookeeper.servers:
+  - "zookeeper-cluster-0.zookeeper-headless.default.svc.cluster.local"
+  - "zookeeper-cluster-1.zookeeper-headless.default.svc.cluster.local"
+  - "zookeeper-cluster-2.zookeeper-headless.default.svc.cluster.local"
+nimbus.seeds: ["storm-master-0.storm-master-headless.default.svc.cluster.local"]
+supervisor.slots.ports:
+  - 6700
+  - 6701
+  - 6702
+  - 6703
+storm.zookeeper.port: 2181
+ui.port: 8087
+storm.local.dir: "/usr/local/apache-storm-1.1.0/data"

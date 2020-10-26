@@ -1,0 +1,85 @@
+---
+kind: StatefulSet
+apiVersion: apps/v1beta2
+metadata:
+  name: storm-slave
+  labels:
+    app: storm
+    component: storm-slave
+  annotations:
+    hadoop/version: 2.7.3
+    jdk/version: jdk1.8.0_161
+    storm/version: 2.3.0
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: storm
+      component: storm-slave
+  template:
+    metadata:
+      labels:
+        app: storm
+        component: storm-slave
+    spec:
+      containers:
+      - name: storm-slave
+        image: 10.221.163.21:5000/storm:1
+        command:
+        - "/bin/bash"
+        - "/etc/storm-config/start-slaves.sh"
+        - "-d"
+        env:
+        - name: MY_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        ports:
+        - name: web
+          containerPort: 8080
+          protocol: TCP
+        - name: server1
+          containerPort: 6700
+          protocol: TCP
+        - name: server2
+          containerPort: 6701
+          protocol: TCP
+        - name: server3
+          containerPort: 6702
+          protocol: TCP
+        - name: server4
+          containerPort: 6703
+          protocol: TCP
+        - name: server5
+          containerPort: 6704
+          protocol: TCP
+        volumeMounts:  
+        - name: datadir
+          mountPath: "/usr/local/apache-storm-1.1.0/data" 
+        terminationMessagePath: "/dev/termination-log"
+        terminationMessagePolicy: File
+        imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      ### podAntiAffinity 描述pod被调度的策略
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app: storm
+                  component: storm-slave
+              topologyKey: kubernetes.io/hostname           
+      schedulerName: default-scheduler
+  volumeClaimTemplates:
+  - metadata:
+      name: datadir
+    spec:
+      accessModes:
+      - ReadWriteMany
+      resources:
+        requests:
+          storage: 200Mi      
+  serviceName: storm-slave-headless
+  podManagementPolicy: OrderedReady

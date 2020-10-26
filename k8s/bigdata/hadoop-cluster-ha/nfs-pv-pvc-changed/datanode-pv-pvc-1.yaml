@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: datanode-pv-1
+spec:
+  storageClassName: datanode-pv-1
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    path: /opt/hadoopdata/datanodedata-1
+    server: 10.221.163.7
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: datadir-hadoop-hdfs-datanode-1
+spec:
+  storageClassName: datanode-pv-1
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi

@@ -1,0 +1,19 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: cluster2-hbase-service
+  labels:
+    hbase: hbase
+spec:
+  ports:
+  - name: webhbase
+    protocol: TCP
+    port: 60010
+    targetPort: 60010
+    nodePort: 30010
+  selector:
+    hbase: hbase
+  type: NodePort
+  sessionAffinity: None
+

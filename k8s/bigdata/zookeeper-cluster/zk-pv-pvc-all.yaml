@@ -1,0 +1,85 @@
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: zk-pv-0
+spec:
+  storageClassName: zk-pv-0
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    path: /opt/nfs/zk0
+    server: 10.221.163.8
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: datadir-zookeeper-cluster-0
+spec:
+  storageClassName: zk-pv-0
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: zk-pv-1
+spec:
+  storageClassName: zk-pv-1
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    path: /opt/nfs/zk1
+    server: 10.221.163.8
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: datadir-zookeeper-cluster-1
+spec:
+  storageClassName: zk-pv-1
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+
+
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: zk-pv-2
+spec:
+  storageClassName: zk-pv-2
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    path: /opt/nfs/zk2
+    server: 10.221.163.8
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: datadir-zookeeper-cluster-2
+spec:
+  storageClassName: zk-pv-2
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+

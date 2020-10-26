@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nodemanager-pv-1
+spec:
+  storageClassName: nodemanager-pv-1
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    path: /opt/hadoopdata/nodemanagerdata-1
+    server: 10.221.163.7
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: datadir-second-hdfs-nodemanager-1
+spec:
+  storageClassName: nodemanager-pv-1
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi

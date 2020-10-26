@@ -1,0 +1,12 @@
+FROM 10.221.163.21:5000/centos:7
+
+# copy tomcat,nginx,datatools to image
+COPY . /tmp
+
+#init
+RUN chmod 777 -R /tmp
+#export port
+
+EXPOSE 6379 6380 80 8005 8080 8009 3306
+
+CMD ["/tmp/bootstrap.sh"]

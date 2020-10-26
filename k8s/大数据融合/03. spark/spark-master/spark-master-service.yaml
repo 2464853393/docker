@@ -1,0 +1,19 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: spark-master-service
+  labels:
+    app: spark
+    component: spark-master
+spec:
+  ports:
+  - name: web
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: spark
+    component: spark-master
+  type: NodePort
+  sessionAffinity: None

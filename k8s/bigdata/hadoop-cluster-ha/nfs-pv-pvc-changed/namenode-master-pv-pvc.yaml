@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: namenode-pv-master
+spec:
+  storageClassName: namenode-pv-master
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    path: /opt/hadoopdata/namenodedata-master
+    server: 10.221.163.7
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: datadir-hadoop-hdfs-namenode-0
+spec:
+  storageClassName: namenode-pv-master
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
